@@ -100,6 +100,7 @@
     .content{
         height: calc(~"100% - 60px");
         display: flex;
+        background: #eee;
     }
     .el-aside{
         height: 100%;
