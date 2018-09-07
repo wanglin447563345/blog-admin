@@ -28,7 +28,7 @@
             <div>
                 <p>发表日期：</p>
                 <el-date-picker
-                        v-model="value1"
+                        v-model="value"
                         type="date"
                         placeholder="选择日期">
                 </el-date-picker>
@@ -36,7 +36,9 @@
         </div>
         <div class="editer">
             <div ref="editor" style="text-align:left"></div>
-            <el-button type="primary" v-on:click="getContent">发布</el-button>
+            <div class="my-button">
+                <el-button type="primary" v-on:click="getContent">发布</el-button>
+            </div>
         </div>
     </div>
 </template>
@@ -94,7 +96,7 @@
         margin-top: 15px;
         text-align: right;
     }
-    .el-button{
+    .my-button{
         margin:20px
     }
     .select{

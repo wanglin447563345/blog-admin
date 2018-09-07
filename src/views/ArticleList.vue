@@ -36,6 +36,11 @@
                     label="文章类别"
                     width="100">
             </el-table-column>
+               <el-table-column
+                       prop="views"
+                       label="阅读量"
+                       width="100">
+               </el-table-column>
             <el-table-column
                     prop="content"
                     label="文章摘要">
@@ -44,13 +49,15 @@
                     label="操作"
                     width="200">
                 <template slot-scope="scope">
-                    <el-button
-                            size="mini"
-                            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button
-                            size="mini"
-                            type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    <div style="display: flex; justify-content: center">
+                        <el-button
+                                size="mini"
+                                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button
+                                size="mini"
+                                type="danger"
+                                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    </div>
                 </template>
             </el-table-column>
         </el-table>
@@ -69,6 +76,7 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
     export default {
         data() {
             return {
@@ -76,46 +84,19 @@
                 tableData: [{
                     date: '2016-05-02',
                     name: '文章一',
+                    views: '2323',
                     content:"摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要",
                     tag: '类型一'
-                }, {
+                },{
                     date: '2016-05-02',
                     name: '文章一',
+                    views: '2323',
                     content:"摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要",
                     tag: '类型一'
-                }, {
+                },{
                     date: '2016-05-02',
                     name: '文章一',
-                    content:"摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要",
-                    tag: '类型一'
-                }, {
-                    date: '2016-05-02',
-                    name: '文章一',
-                    content:"摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要",
-                    tag: '类型一'
-                }, {
-                    date: '2016-05-02',
-                    name: '文章一',
-                    content:"摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要",
-                    tag: '类型一'
-                }, {
-                    date: '2016-05-02',
-                    name: '文章一',
-                    content:"摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要",
-                    tag: '类型一'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    content:"摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要",
-                    tag: '类型一'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    content:"摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要",
-                    tag: '类型二'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
+                    views: '2323',
                     content:"摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要",
                     tag: '类型一'
                 }],
@@ -139,6 +120,10 @@
                 currentPage:4
             }
         },
+        computed: mapState([
+            "a",
+            "b"
+        ]),
         methods: {
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -168,7 +153,7 @@
         margin-right: 16px;
     }
     .has-gutter>tr>th{
-        background: #bfbfbf;
+        background: #002329;
         color: #fff;
         text-align: center;
     }

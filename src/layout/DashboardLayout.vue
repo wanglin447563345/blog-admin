@@ -52,9 +52,7 @@
                 </el-menu>
             </el-aside>
             <el-main>
-                <transition name="fade">
-                   <router-view></router-view>
-                </transition>
+                <router-view></router-view>
             </el-main>
         </div>
     </el-container>
@@ -109,18 +107,5 @@
     .el-main{
         height: 100%;
     }
-    .fade-enter-active{
-        transform: translateY(100%);
-        transition: all 0.5s
-    }
-    .fade-leave-active {
-        opacity: 1;
-        transition: opacity .5s;
-    }
-    .fade-enter{
-        transform: translateY(0);
-    }
-    .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-        opacity: 0;
-    }
+
 </style>
