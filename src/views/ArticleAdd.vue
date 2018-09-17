@@ -37,7 +37,7 @@
         <div class="editer">
             <div ref="editor" style="text-align:left"></div>
             <div class="my-button">
-                <el-button type="primary" v-on:click="getContent">发布</el-button>
+                <el-button type="primary" @click="getContent">发布</el-button>
             </div>
         </div>
     </div>

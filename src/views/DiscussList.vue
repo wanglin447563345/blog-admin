@@ -123,4 +123,9 @@
     .el-pagination{
         padding:30px 0 20px;
     }
+    .el-table .cell{
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+    }
 </style>

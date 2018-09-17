@@ -4,13 +4,13 @@
             <div class="logo">
                 博客后台管理系统
             </div>
-            <el-dropdown>
+            <el-dropdown @command="routerPassword">
                 <span class="el-dropdown-link">
                      用户<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>修改密码</el-dropdown-item>
-                    <el-dropdown-item>退出登录</el-dropdown-item>
+                    <el-dropdown-item command="a">修改密码</el-dropdown-item>
+                    <el-dropdown-item command="b">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </el-header>
@@ -39,6 +39,7 @@
                         <el-menu-item-group>
                             <el-menu-item index="/article-list">文章列表</el-menu-item>
                             <el-menu-item index="/article-add">发表文章</el-menu-item>
+                            <el-menu-item index="/article-type">文章类别</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-menu-item index="/discuss-list">
@@ -52,7 +53,9 @@
                 </el-menu>
             </el-aside>
             <el-main>
+                <transition name="fade">
                 <router-view></router-view>
+                </transition>
             </el-main>
         </div>
     </el-container>
@@ -73,6 +76,14 @@
             handleSelect(e){
                 this.nav_active=e
             },
+            routerPassword(params){
+                if(params==='a'){
+                    this.nav_active='';
+                    this.$router.push('/change-password')
+                }else {
+                    this.$router.push('/user/login')
+                }
+            }
         }
     }
 </script>
@@ -106,6 +117,23 @@
     }
     .el-main{
         height: 100%;
+        overflow: hidden;
     }
+    .fade-enter-active{
+        transform: scale(0);
+        transition: all 1s;
+    }
+    .fade-enter-to {
+        transform: scale(1);
+    }
+    .fade-leave-to{
+        transform: scale(1);
+        /*opacity: 1;*/
+    }
+    .fade-leave-active{
+        transform: scale(0);
+        /*opacity: 0;*/
+        transition: all 0.5s;
 
+    }
 </style>

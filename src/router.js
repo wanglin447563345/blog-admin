@@ -19,6 +19,11 @@ export default new Router({
           component: () => import("./views/Dashboard.vue")
         },
         {
+          path: "/article-type",
+          name: "article-type",
+          component: () => import("./views/ArticleType.vue")
+        },
+        {
           path: "/article-list",
           name: "article-list",
           component: () => import("./views/ArticleList.vue")
@@ -37,13 +42,33 @@ export default new Router({
           path: "/user-list",
           name: "user-list",
           component: () => import("./views/UserList.vue")
+        },
+        {
+          path: "/change-password",
+          name: "change-password",
+          component: () => {
+            return import("./views/ChangePassword.vue");
+          }
         }
       ]
     },
     {
-      path: "/login",
-      name: "login",
-      component: () => import("./layout/UserLayout.vue")
+      path: "/user",
+      redirect: "/user/login",
+      name: "user",
+      component: () => import("./layout/UserLayout.vue"),
+      children: [
+        {
+          path: "/user/login",
+          name: "login",
+          component: () => import("./views/Login.vue")
+        },
+        {
+          path: "/user/register",
+          name: "register",
+          component: () => import("./views/Register.vue")
+        }
+      ]
     }
   ]
 });
