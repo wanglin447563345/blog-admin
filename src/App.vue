@@ -27,18 +27,18 @@ export default {
     }
     .fade-enter-active{
         transform: scale(0);
-        transition: all 1s;
+        transition: all 0.5s;
     }
     .fade-enter-to {
         transform: scale(1);
     }
     .fade-leave-to{
         transform: scale(1);
-        /*opacity: 1;*/
+        opacity: 1;
     }
     .fade-leave-active{
         transform: scale(0);
-        /*opacity: 0;*/
+        opacity: 0;
         transition: all 0.5s;
 
     }

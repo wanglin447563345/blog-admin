@@ -11,7 +11,7 @@
                 <el-input type="password" v-model="registerForm.checkPass" autocomplete="off"  placeholder="请再次输入密码"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
+                <el-button type="primary" @click="submitForm('registerForm',registerForm)">注册</el-button>
             </el-form-item>
         </el-form>
         <div class="skip_l">
@@ -21,7 +21,8 @@
 </template>
 
 <script>
-
+import md5 from "md5";
+import {register} from "../service/Api"
     export default {
         data() {
             let checkUserName = (rule, value, callback) => {
@@ -74,14 +75,21 @@
             };
         },
         methods: {
-            submitForm(registerForm) {
+            submitForm(registerForm,data) {
                 this.$refs[registerForm].validate((valid) => {
                     if (valid) {
-                        this.$message({
-                            message: '注册更成功，请登录',
-                            type: 'success'
-                        });
-                        this.$router.push("/user/login")
+                        register({user_name:data.user_name,password:md5(data.password),control_user:0})
+                            .then(data=>{
+                                if(data.errno===0){
+                                    this.$message({
+                                        message: '注册更成功，请登录',
+                                        type: 'success'
+                                    });
+                                    this.$router.push("/user/login")
+                                }else {
+                                    this.$message.error(data.errmsg)
+                                }
+                            })
                     } else {
                         return false;
                     }

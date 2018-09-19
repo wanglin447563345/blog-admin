@@ -16,38 +16,57 @@ export default new Router({
         {
           path: "/dashboard",
           name: "dashboard",
-          component: () => import("./views/Dashboard.vue")
+          component: () => import("./views/Dashboard.vue"),
+          meta: {
+            requireAuth: true // 判断是否需要登录
+          }
         },
         {
           path: "/article-type",
           name: "article-type",
-          component: () => import("./views/ArticleType.vue")
+          component: () => import("./views/ArticleType.vue"),
+          meta: {
+            requireAuth: true // 判断是否需要登录
+          }
         },
         {
           path: "/article-list",
           name: "article-list",
-          component: () => import("./views/ArticleList.vue")
+          component: () => import("./views/ArticleList.vue"),
+          meta: {
+            requireAuth: true // 判断是否需要登录
+          }
         },
         {
           path: "/article-add",
           name: "article-add",
-          component: () => import("./views/ArticleAdd.vue")
+          component: () => import("./views/ArticleAdd.vue"),
+          meta: {
+            requireAuth: true // 判断是否需要登录
+          }
         },
         {
           path: "/discuss-list",
           name: "discuss-list",
-          component: () => import("./views/DiscussList.vue")
+          component: () => import("./views/DiscussList.vue"),
+          meta: {
+            requireAuth: true // 判断是否需要登录
+          }
         },
         {
           path: "/user-list",
           name: "user-list",
-          component: () => import("./views/UserList.vue")
+          component: () => import("./views/UserList.vue"),
+          meta: {
+            requireAuth: true // 判断是否需要登录
+          }
         },
         {
           path: "/change-password",
           name: "change-password",
-          component: () => {
-            return import("./views/ChangePassword.vue");
+          component: () => import("./views/ChangePassword.vue"),
+          meta: {
+            requireAuth: true // 判断是否需要登录
           }
         }
       ]
@@ -61,12 +80,18 @@ export default new Router({
         {
           path: "/user/login",
           name: "login",
-          component: () => import("./views/Login.vue")
+          component: () => import("./views/Login.vue"),
+          meta: {
+            requireAuth: false // 判断是否需要登录
+          }
         },
         {
           path: "/user/register",
           name: "register",
-          component: () => import("./views/Register.vue")
+          component: () => import("./views/Register.vue"),
+          meta: {
+            requireAuth: false // 判断是否需要登录
+          }
         }
       ]
     }
