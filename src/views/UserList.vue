@@ -1,85 +1,89 @@
 <template>
-    <div class="article_list">
-        <div class="article_search">
-            <div class="search_item">
-                <el-input v-model="artilce_name" placeholder="请输入文章名搜索"></el-input>
-                <el-button type="primary">搜索</el-button>
+    <div>
+        <HeadTitle title="用户列表"></HeadTitle>
+        <div class="article_list">
+            <div class="article_search">
+                <div class="search_item">
+                    <el-input v-model="artilce_name" placeholder="请输入文章名搜索"></el-input>
+                    <el-button type="primary">搜索</el-button>
+                </div>
+                <div class="search_date">
+                    <el-button @click="handleShow" type="primary" icon="el-icon-plus">用户</el-button>
+                </div>
             </div>
-            <div class="search_date">
-                <el-button @click="handleShow" type="primary" icon="el-icon-plus">用户</el-button>
+            <div class="table">
+                <el-table
+                        :data="tableData"
+                        stripe
+                        style="width: 100%">
+                    <el-table-column
+                            prop="date"
+                            label="创建日期">
+                    </el-table-column>
+                    <el-table-column
+                            prop="userName"
+                            label="用户名">
+                    </el-table-column>
+                    <el-table-column
+                            prop="userController"
+                            label="可操作用户">
+                    </el-table-column>
+                    <el-table-column
+                            label="操作">
+                        <template slot-scope="scope">
+                            <div style="display: flex; justify-content: center">
+                                <el-button
+                                        size="mini"
+                                        @click="handleEdit(scope.$index, scope.row)">重置密码</el-button>
+                                <el-button
+                                        size="mini"
+                                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                                <el-button
+                                        size="mini"
+                                        type="danger"
+                                        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                            </div>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination
+                        background
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="currentPage"
+                        :page-sizes="[100, 200, 300, 400]"
+                        :page-size="100"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="400">
+                </el-pagination>
             </div>
-        </div>
-        <div class="table">
-            <el-table
-                    :data="tableData"
-                    stripe
-                    style="width: 100%">
-                <el-table-column
-                        prop="date"
-                        label="创建日期">
-                </el-table-column>
-                <el-table-column
-                        prop="userName"
-                        label="用户名">
-                </el-table-column>
-                <el-table-column
-                        prop="userController"
-                        label="可操作用户">
-                </el-table-column>
-                <el-table-column
-                        label="操作">
-                    <template slot-scope="scope">
-                        <div style="display: flex; justify-content: center">
-                            <el-button
-                                    size="mini"
-                                    @click="handleEdit(scope.$index, scope.row)">重置密码</el-button>
-                            <el-button
-                                    size="mini"
-                                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button
-                                    size="mini"
-                                    type="danger"
-                                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                        </div>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <el-pagination
-                    background
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-sizes="[100, 200, 300, 400]"
-                    :page-size="100"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="400">
-            </el-pagination>
-        </div>
-        <el-dialog title="新增用户" :visible.sync="dialogFormVisible" width="480px">
-            <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"  label-width="90px" class="demo-ruleForm">
-                <el-form-item label="用户名" prop="user_name">
-                    <el-input v-model.number="ruleForm2.userName"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" prop="password">
-                    <el-input type="password" v-model="ruleForm2.password" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="可操作用户" prop="userController">
-                    <el-radio v-model="ruleForm2.userController" label="0">否</el-radio>
-                    <el-radio v-model="ruleForm2.userController" label="1">是</el-radio>
-                </el-form-item>
-                <!--<el-form-item>-->
+            <el-dialog title="新增用户" :visible.sync="dialogFormVisible" width="480px">
+                <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"  label-width="90px" class="demo-ruleForm">
+                    <el-form-item label="用户名" prop="user_name">
+                        <el-input v-model.number="ruleForm2.userName"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" prop="password">
+                        <el-input type="password" v-model="ruleForm2.password" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="可操作用户" prop="userController">
+                        <el-radio v-model="ruleForm2.userController" label="0">否</el-radio>
+                        <el-radio v-model="ruleForm2.userController" label="1">是</el-radio>
+                    </el-form-item>
+                    <!--<el-form-item>-->
                     <!--<el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>-->
-                <!--</el-form-item>-->
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="handleHidden">取 消</el-button>
-                <el-button type="primary" @click="submitForm('ruleForm2')">确 定</el-button>
-            </div>
-        </el-dialog>
+                    <!--</el-form-item>-->
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="handleHidden">取 消</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm2')">确 定</el-button>
+                </div>
+            </el-dialog>
+        </div>
     </div>
 </template>
 
 <script>
+    import HeadTitle from '../components/HeadTitle.vue'
     import {mapState} from 'vuex'
     export default {
         name:"userList",
@@ -149,10 +153,9 @@
                 },
             }
         },
-        computed: mapState([
-            "a",
-            "b"
-        ]),
+        components:{
+            HeadTitle
+        },
         methods: {
             //            添加用户
             submitForm(formName) {

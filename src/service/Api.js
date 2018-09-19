@@ -32,6 +32,14 @@ export const create_article = params => {
   });
 };
 
+// 文章详情
+export const detail_article = params => {
+  return post("detail_article", {
+    method: "POST",
+    data: params
+  });
+};
+
 // 修改文章
 export const edit_article = params => {
   return post("edit_article", {
@@ -46,4 +54,20 @@ export const delete_article = params => {
     method: "POST",
     data: params
   });
+};
+
+// 文章类型统计
+export const type_sum = params => {
+  return post("type_sum", {
+    method: "POST",
+    data: params
+  });
+};
+
+// 创建文章类型
+export const create_article_type = params => {
+    return post("create_type", {
+        method: "POST",
+        data: params
+    });
 };

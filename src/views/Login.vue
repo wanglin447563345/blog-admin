@@ -22,6 +22,7 @@
     import md5 from 'md5'
     import {login} from '../service/Api'
     export default {
+        name:"Login",
         data() {
             let checkUserName = (rule, value, callback) => {
                 if (!value) {

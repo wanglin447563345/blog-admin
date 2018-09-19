@@ -19,6 +19,7 @@
 
 <script>
     export default {
+        name:"changPassword",
         data() {
             var checkAge = (rule, value, callback) => {
                 if (!value) {

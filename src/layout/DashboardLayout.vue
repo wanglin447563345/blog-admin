@@ -117,7 +117,6 @@
     }
     .el-main{
         height: 100%;
-        overflow: hidden;
     }
     .fade-enter-active{
         transform: scale(0.5);

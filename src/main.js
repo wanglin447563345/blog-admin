@@ -24,7 +24,7 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
+store.dispatch("getTypeSum");
 new Vue({
   router,
   store,

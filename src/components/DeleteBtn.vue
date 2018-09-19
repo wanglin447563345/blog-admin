@@ -1,10 +1,15 @@
 <template>
-    <el-button
-            size="mini"
-            type="danger"
-            @click="sureDelete()">
-        删除
-    </el-button>
+    <div>
+        <el-button
+                size="mini"
+                type="danger"
+                :disabled="disabled"
+                @click="sureDelete()">
+            删除
+        </el-button>
+    </div>
+
+
 </template>
 
 <script>
@@ -15,9 +20,11 @@
             };
         },
         props:{
-            title:String
+            title:String,
+            disabled:Boolean
         },
         methods: {
+
             sureDelete(done) {
                 this.$confirm(`确认删除 【${this.title}】？`)
                     .then(_ => {

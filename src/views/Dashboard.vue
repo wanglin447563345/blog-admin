@@ -1,11 +1,15 @@
 <template>
-  <div class="dashboard">
-      <div id="bar" :style="{width: '300px', height: '340px'}"></div>
-      <div id="pie" :style="{width: '340px', height: '340px'}"></div>
+  <div>
+      <HeadTitle title="统计"></HeadTitle>
+      <div class="dashboard">
+          <div id="bar" :style="{width: '300px', height: '340px'}"></div>
+          <div id="pie" :style="{width: '340px', height: '340px'}"></div>
+      </div>
   </div>
 </template>
 
 <script>
+    import HeadTitle from '../components/HeadTitle.vue'
     import Vue from "vue";
     const echarts = require('echarts/lib/echarts');
     // 引入柱状图
@@ -17,7 +21,10 @@
     require('echarts/lib/component/title');
     Vue.prototype.$echarts = echarts;
     export default {
-        name:"dashboard",
+        name:"Dashboard",
+        components:{
+            HeadTitle
+        },
         mounted(){
             this.drawBar();
             this.drawPie();

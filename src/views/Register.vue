@@ -24,6 +24,7 @@
 import md5 from "md5";
 import {register} from "../service/Api"
     export default {
+        name:"Register",
         data() {
             let checkUserName = (rule, value, callback) => {
                 if (!value) {

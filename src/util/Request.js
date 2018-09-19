@@ -9,7 +9,7 @@ export const post = (url, options) => {
     url
   };
   const newOptions = { ...defaultOptions, ...options };
-  const userInfo = JSON.parse(cookie.get("user_info") || "{}");
+  const userInfo = JSON.parse(cookie.get("userInfo") || "{}");
   if (!(newOptions.data instanceof FormData)) {
     newOptions.headers = {
       Accept: "application/json",
