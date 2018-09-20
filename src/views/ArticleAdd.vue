@@ -10,11 +10,12 @@
                 <span>缩略图：</span>
                 <el-upload
                         class="avatar-uploader"
-                        action="https://jsonplaceholder.typicode.com/posts/"
+                        action="http://localhost:3001/api/upload"
+                        :headers="headers"
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <img v-if="imageUrl||img_url" :src="imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </div>
@@ -57,12 +58,19 @@
     export default {
         name:"articleAdd",
         data() {
+            const userInfo = JSON.parse(cookie.get("userInfo") || "{}");
             return {
                 title: '',
                 description: '',
                 editorContent: "",
                 type_id:1,
-                imageUrl: ''
+                imageUrl: '',
+                img_url:'',
+                headers:{
+                    Accept: "image/jpeg",
+                    "X-Beancomm-UserId": userInfo.user_id,
+                    "X-Beancomm-Token": userInfo.token,
+                }
             }
         },
         components:{
@@ -84,6 +92,7 @@
                 editor.customConfig.onchange = (html) => {
                     this.editorContent = html
                 };
+                 editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
                 editor.customConfig.zIndex = 100;
                 editor.create()
             },
@@ -104,7 +113,7 @@
                 }
                 const userInfo = JSON.parse(cookie.get('userInfo'));
                 if(article_id){
-                    edit_article({title:this.title,type_id:this.type_id,description:this.description,content:this.editorContent,article_id:article_id})
+                    edit_article({title:this.title,type_id:this.type_id,description:this.description,content:this.editorContent,article_id:article_id,img_url:this.img_url})
                         .then(data=>{
                             if(data.errno===0){
                                 this.$router.push('/article-list');
@@ -117,7 +126,7 @@
                             }
                         })
                 }else {
-                    create_article({title:this.title,type_id:this.type_id,description:this.description,content:this.editorContent,creator_id:userInfo.user_id})
+                    create_article({title:this.title,type_id:this.type_id,description:this.description,content:this.editorContent,creator_id:userInfo.user_id,img_url:this.img_url})
                         .then(data=>{
                             if(data.errno===0){
                                 this.$router.push('/article-list');
@@ -141,25 +150,28 @@
                         this.description=data.data.description;
                         this.editorContent=data.data.content;
                         this.type_id=data.data.type_id;
+                        this.img_url=data.data.img_url;
                         editor.txt.html(data.data.content)
                     })
             },
 
 //            上传缩略图
             handleAvatarSuccess(res, file) {
+                this.img_url=window.baseUrl+res.data.url;
                 this.imageUrl = URL.createObjectURL(file.raw);
+
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
+                const isLt1M = file.size / 1024 / 1024 < 1;
 
                 if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                    this.$message.error('上传图片只能是 JPG 格式!');
                 }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                if (!isLt1M) {
+                    this.$message.error('上传图片大小不能超过 1MB!');
                 }
-                return isJPG && isLt2M;
+                return isJPG && isLt1M;
             }
         },
 

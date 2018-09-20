@@ -66,8 +66,24 @@ export const type_sum = params => {
 
 // 创建文章类型
 export const create_article_type = params => {
-    return post("create_type", {
-        method: "POST",
-        data: params
-    });
+  return post("create_type", {
+    method: "POST",
+    data: params
+  });
+};
+
+// 删除文章类型
+export const delete_article_type = params => {
+  return post("delete_type", {
+    method: "POST",
+    data: params
+  });
+};
+
+// 修改文章类型
+export const edit_article_type = params => {
+  return post("edit_type", {
+    method: "POST",
+    data: params
+  });
 };

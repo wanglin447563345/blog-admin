@@ -24,6 +24,8 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+// 服务器根目录
+window.baseUrl = "http://localhost:3001";
 store.dispatch("getTypeSum");
 new Vue({
   router,

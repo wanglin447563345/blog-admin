@@ -4,7 +4,7 @@
         <div class="article_type">
             <div class="type_add">
                 <el-row>
-                    <el-button type="primary" @click="dialogFormVisible = true">新建类别</el-button>
+                    <el-button type="primary" @click="showCreate">新建类别</el-button>
                 </el-row>
             </div>
             <el-row>
@@ -33,19 +33,14 @@
                                     >
                                         编辑
                                     </el-button>
-                                    <DeleteBtn ref="DeleteBtn" @Delete="Delete(scope.$index, scope.row)"
-                                               :title="scope.row.title"
+                                    <DeleteBtn ref="DeleteBtn" @Delete="Delete(scope.row.id)"
+                                               :title="scope.row.type"
                                                :disabled="!(scope.row.user_name===userInfo.user_name||userInfo.user_id===1)">
                                     </DeleteBtn>
                                 </div>
                             </template>
                         </el-table-column>
                     </el-table>
-                    <el-pagination
-                            background
-                            layout="prev, pager, next"
-                            :total="1000">
-                    </el-pagination>
                 </div>
             </el-row>
             <el-dialog title="文章类型" :visible.sync="dialogFormVisible">
@@ -65,14 +60,15 @@
     import cookie from 'js-cookie'
     import DeleteBtn from '../components/DeleteBtn.vue'
     import HeadTitle from '../components/HeadTitle.vue'
-    import {create_article_type} from "../service/Api"
+    import {create_article_type,delete_article_type,edit_article_type} from "../service/Api"
     export default {
         name:"articleType",
         data(){
             return {
                 userInfo:JSON.parse(cookie.get("userInfo")),
                 dialogFormVisible: false,
-                type:""
+                type:"",
+                id:''
             }
         },
         components:{
@@ -84,9 +80,21 @@
         },
         methods:{
             ...mapActions(["getTypeSum"]),
-            createType:function (id,type) {
-                if(id){
-                    this.type=type
+            createType:function () {
+                if(this.id){
+                    edit_article_type({id:this.id,type:this.type})
+                        .then(data=>{
+                            if(data.errno===0){
+                                this.$message({
+                                    message:data.errmsg,
+                                    type:"success"
+                                });
+                                this.getTypeSum();
+                                this.dialogFormVisible=false
+                            }else {
+                                this.$message.error(data.errmsg)
+                            }
+                        })
                 }else {
                     create_article_type({type:this.type})
                         .then(data=>{
@@ -102,7 +110,35 @@
                             }
                         })
                 }
+            },
+
+            Delete:function (id) {
+                delete_article_type({id:id})
+                    .then(data=>{
+                        if(data.errno===0){
+                            this.$message({
+                                message:data.errmsg,
+                                type:"success"
+                            });
+                            this.getTypeSum();
+                            this.dialogFormVisible=false
+                        }else {
+                            this.$message.error(data.errmsg)
+                        }
+                    })
+            },
+            showCreate:function () {
+                this.dialogFormVisible=true;
+                this.type='';
+                this.id=''
+            },
+            editType:function (id,type) {
+                this.dialogFormVisible=true;
+                this.type=type;
+                this.id=id
             }
+
+
         }
     }
 </script>
